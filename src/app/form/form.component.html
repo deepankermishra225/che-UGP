@@ -1,0 +1,103 @@
+<div class="container">
+  <div class="container-fluid">
+    <div *ngIf="semester!='empty'">
+      <h1>Select Course</h1>
+
+      <div class="row">
+        <div class="col">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Choose Course</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="overflow-y:scroll; max-height:200px;">
+              <button
+                ngbDropdownItem *ngFor = "let course of courses"
+                (click)="getList(course.courseName, course.slotType)">
+                {{course.courseName}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <div *ngIf="semester=='empty'">
+      <p class="h2 text-info">No active forms!!</p>
+    </div>
+
+      <div *ngIf="freeSlots.length==0 && fixSlots.length==0 && slotType.length!=0">
+        <h2>No Slot available for {{chosenCourse}}</h2>
+      </div>
+
+    <div *ngIf="freeSlots.length>0">
+      <h1>{{chosenCourse}}</h1>
+      <h2>Choose Your Preferred Slots</h2>
+
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Slot</th>
+          <th scope="col">TimeTable</th>
+          <th scope="row">Add</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr *ngFor="let slot of freeSlots; index as i">
+          <th scope="row">{{ i+1 }}</th>
+          <td>{{ slot.slotName }}</td>
+          <td>{{ slot.timeTable }}</td>
+          <td>
+            <div *ngIf="!this.slot.slotName?.startsWith('DC')">
+            <button class = 'btn btn-danger' (click)="confirmAddSlot(slot.timeTable!, slot.slotName!)">Add</button>
+            </div>
+            <div *ngIf="this.slot.slotName?.startsWith('DC')">
+              Fixed
+            </div>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+
+      <hr>
+      <h2>Added Slots</h2>
+      <div *ngIf = "this.fixSlots.length==0">
+        Your added slots that you prefer will be displayed here...
+      </div>
+    </div>
+
+      <div *ngIf="fixSlots.length>0 && freeSlots.length==0">
+        <h1>{{chosenCourse}}</h1>
+        You have add all the slots in your list...
+        <hr>
+        <h2>Added Slots</h2>
+      </div>
+
+      <div *ngIf="fixSlots.length >0">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Slot Name</th>
+            <th scope="col">TimeTable</th>
+            <th scope="row">Remove</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <tr *ngFor="let slot of fixSlots; index as i">
+            <th scope="row">{{ i+1 }}</th>
+            <td>{{ slot.slotName }}</td>
+            <td>{{ slot.timeTable }}</td>
+            <td>
+              <button class = 'btn btn-danger' (click)="confirmDeleteSlot(slot.slotName!)">Remove</button>
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      </div>
+  </div>
+</div>

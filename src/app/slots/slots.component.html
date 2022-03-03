@@ -1,0 +1,238 @@
+<div class="container">
+  <div class="container-fluid">
+   <h1>Add Slots</h1>
+ <p> Edit the time Slots to be added (in 12-hour format) :</p>
+
+    <label for="slotType">Choose Slot Type:</label>
+    <select name="slotType" id="slotType" (change)="changeSlot($event)">
+      <option value="DE">DE</option>
+      <option value="OE">OE</option>
+      <option value="PG">PG</option>
+      <option value="DC">DC</option>
+    </select>
+
+    <label for="sem">Even or Odd Semester ?:</label>
+    <select name="sem" id="sem" (change)="changeSem($event)">
+      <option value="even">Even</option>
+      <option value="odd">Odd</option>
+    </select>
+
+    <button class = 'btn btn-primary float-right' (click)="saveSlotDetails()">ADD SLOT</button>
+    <hr>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Day</th>
+    <th scope="col">From (HH:MM)</th>
+    <th scope="col">To (HH:MM)</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <th scope="row">1</th>
+    <td>
+      Monday
+    </td>
+    <td><ngb-timepicker [(ngModel)]="slot.mondayFrom" [meridian] ="true" [spinners]="false" size="small" >
+    </ngb-timepicker></td>
+    <td><ngb-timepicker [(ngModel)]="slot.mondayTo" [meridian] ="true" [spinners]="false" size="small">
+    </ngb-timepicker></td>
+  </tr>
+
+  <tr>
+    <th scope="row">2</th>
+    <td>
+      Tuesday
+    </td>
+    <td><ngb-timepicker [(ngModel)]="slot.tuesdayFrom" [meridian] ="true" [spinners]="false" size="small" >
+    </ngb-timepicker></td>
+    <td><ngb-timepicker [(ngModel)]="slot.tuesdayTo" [meridian] ="true" [spinners]="false" size="small">
+    </ngb-timepicker></td>
+  </tr>
+
+  <tr>
+    <th scope="row">3</th>
+    <td>
+      Wednesday
+    </td>
+    <td><ngb-timepicker [(ngModel)]="slot.wednesdayFrom" [meridian] ="true" [spinners]="false" size="small" >
+    </ngb-timepicker></td>
+    <td><ngb-timepicker [(ngModel)]="slot.wednesdayTo" [meridian] ="true" [spinners]="false" size="small">
+    </ngb-timepicker></td>
+  </tr>
+
+  <tr>
+    <th scope="row">4</th>
+    <td>
+      Thursday
+    </td>
+    <td><ngb-timepicker [(ngModel)]="slot.thursdayFrom" [meridian] ="true" [spinners]="false" size="small" >
+    </ngb-timepicker></td>
+    <td><ngb-timepicker [(ngModel)]="slot.thursdayTo" [meridian] ="true" [spinners]="false" size="small">
+    </ngb-timepicker></td>
+  </tr>
+
+  <tr>
+    <th scope="row">5</th>
+    <td>
+      Friday
+    </td>
+    <td><ngb-timepicker [(ngModel)]="slot.fridayFrom" [meridian] ="true" [spinners]="false" size="small" >
+    </ngb-timepicker></td>
+    <td><ngb-timepicker [(ngModel)]="slot.fridayTo" [meridian] ="true" [spinners]="false" size="small">
+    </ngb-timepicker></td>
+  </tr>
+
+  <tr>
+    <th scope="row">6</th>
+    <td>
+      Saturday
+    </td>
+    <td><ngb-timepicker [(ngModel)]="slot.saturdayFrom" [meridian] ="true" [spinners]="false" size="small" >
+    </ngb-timepicker></td>
+    <td><ngb-timepicker [(ngModel)]="slot.saturdayTo" [meridian] ="true" [spinners]="false" size="small">
+    </ngb-timepicker></td>
+  </tr>
+
+  <tr>
+    <th scope="row">7</th>
+    <td>
+      Sunday
+    </td>
+    <td><ngb-timepicker [(ngModel)]="slot.sundayFrom" [meridian] ="true" [spinners]="false" size="small" >
+    </ngb-timepicker></td>
+    <td><ngb-timepicker [(ngModel)]="slot.sundayTo" [meridian] ="true" [spinners]="false" size="small">
+    </ngb-timepicker></td>
+  </tr>
+  </tbody>
+</table>
+   <hr>
+  </div>
+</div>
+
+<div class="container">
+  <div class="container-fluid">
+    <h1>Available Slots</h1>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Slot</th>
+        <th scope="col">Semester</th>
+        <th scope="col">TimeTable</th>
+        <th scope="row">Remove</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let slot of availableSlots; index as i">
+        <th scope="row">{{ i+1 }}</th>
+        <td>{{ slot.slotName }}</td>
+        <td>{{ slot.semester }}</td>
+        <td>{{ slot.timeTable }}</td>
+        <td>
+          <button class = 'btn btn-danger' (click)="confirmDeleteSlot(slot.id)">Remove</button>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+
+    <hr>
+  </div>
+</div>
+
+<div class="container">
+  <div class="container-fluid">
+    <div clas = "row">
+      <h1>Add Courses</h1>
+
+      <label for="slotType">Course offered as:</label>
+        <select name="courseType" id="courseType" (change)="changeCourseSlot($event)">
+        <option value="DE">DE</option>
+        <option value="OE">OE</option>
+        <option value="DC">DC</option>
+      </select>
+
+      <label for="semAdd">Even or Odd Semester ?:</label>
+      <select name="semAdd" id="semAdd" (change)="changeCourseSem($event)">
+        <option value="even">Even</option>
+        <option value="odd">Odd</option>
+      </select>
+
+      <label for="courseInfo">Choose Batch: </label>
+      <select name="courseInfo" id="courseInfo" (change)="changeCourseInfo($event)">
+        <option value="UG Only">UG Only</option>
+        <option value="PG Only">PG Only</option>
+        <option value="PG & UG 4th Year">PG & UG 4th Year Onwards</option>
+        <option value="PG & UG 3rd Year">PG & UG 3rd Year Onwards</option>
+      </select>
+
+      <button class = 'btn btn-primary float-right' (click)="saveCourseDetails()">Add Course</button>
+      <hr>
+
+        <div class="form-row text-center">
+          <div class="row">
+            <div class="col-md-6">
+             <input type="text" class="form-control" placeholder="Course Name Eg. CHE381A"
+                 [(ngModel)]="course.courseName" name="courseName">
+           </div>
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Total Students"
+               [(ngModel)]="course.strength" name="strength">
+            </div>
+            <div class="col-md-6 mt-2">
+              <input type="text" class="form-control" placeholder="instructor cc username"
+                  [(ngModel)]="course.instructor" name="instructor">
+            </div>
+          </div>
+          </div>
+
+
+      <hr>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="container-fluid">
+    <h1>Course Data</h1>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Course Type</th>
+        <th scope="col">Semester</th>
+        <th scope="col">Course Name</th>
+        <th scope="col">Info</th>
+        <th scope="col">Instructor</th>
+        <th scope="col">Batch Strength</th>
+        <th scope="row">Remove</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let givenCourse of savedCourses; index as i">
+        <th scope="row">{{ i+1 }}</th>
+        <td>{{ givenCourse.slotType }}</td>
+        <td>{{ givenCourse.semester }}</td>
+        <td>{{ givenCourse.courseName }}</td>
+        <td>{{ givenCourse.info }}</td>
+        <td>{{ givenCourse.instructor }}</td>
+        <td>{{ givenCourse.strength }}</td>
+        <td>
+          <button class = 'btn btn-danger' (click)="confirmDeleteCourse(givenCourse.id)">Remove</button>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+
+    <hr>
+  </div>
+</div>
+
