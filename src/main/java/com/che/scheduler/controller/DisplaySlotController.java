@@ -22,8 +22,15 @@ public class DisplaySlotController {
 
     @PostMapping("/save")
     public void saveDisplaySlot(@RequestBody Slot slot) {
-        DisplaySlot displaySlot = new DisplaySlot(slot);
-        this.displaySlotService.saveDisplaySlot(displaySlot);
+
+        String timeSlot = this.displaySlotService.generateTimeTableString(slot) ;
+        if(!timeSlot.equals("")) {
+            String slotName = slot.getSlotType()+"-" ;
+            int no = this.displaySlotService.getDisplaySlotBySlotType(slot.getSlotType()).size()+1 ;
+            slotName+= no ;
+            DisplaySlot displaySlot = new DisplaySlot( slot.getSemester(), timeSlot, slot.getSlotType() , slotName);
+            this.displaySlotService.saveDisplaySlot(displaySlot);
+        }
     }
 
     @GetMapping("/slots/all")

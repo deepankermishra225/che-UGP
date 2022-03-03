@@ -9,9 +9,9 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO )
     @Column(name = "Id")
-    private Integer id ;
+    private Long id ;
 
-    @Column(name="COLUMN_NAME")
+    @Column(name="COURSE_NAME")
     private String courseName ;
 
     @Column(name="SLOT_TYPE")
@@ -20,11 +20,33 @@ public class Schedule {
     @Column(name="TIME_TABLE")
     private String timeTable ;
 
-    public Integer getId() {
+    @Column(name="PREF")
+    private Integer pref ;
+
+    @Column(name="slotName")
+    private String slotName ;
+
+    public String getSlotName() {
+        return slotName;
+    }
+
+    public void setSlotName(String slotName) {
+        this.slotName = slotName;
+    }
+
+    public Integer getPref() {
+        return pref;
+    }
+
+    public void setPref(Integer pref) {
+        this.pref = pref;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -52,10 +74,11 @@ public class Schedule {
         this.timeTable = timeTable;
     }
 
-    public Schedule(String courseName, String timeTable, String slotType){
-        setTimeTable(timeTable);
+    public Schedule(String courseName, String slotName, String slotType){
+        setSlotName(slotName);
         setSlotType(slotType);
         setCourseName(courseName);
+        setPref(0);
     }
 
     public Schedule(){

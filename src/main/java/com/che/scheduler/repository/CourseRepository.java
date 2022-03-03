@@ -11,6 +11,8 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 
     List<Course>findBySemester(String semester);
 
+    List<Course>findByInstructorAndSemester(String instructor, String semester);
+
     List<Course> findBySlotType(String slotType) ;
 
     List<Course> findBySemesterAndSlotType(String semester , String slotType) ;

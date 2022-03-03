@@ -25,6 +25,10 @@ public class CourseService {
         return this.repository.findAll();
     }
 
+    public List<Course> getCoursesByInstructor(String semester, String instructor){
+        return this.repository.findByInstructorAndSemester(instructor, semester) ;
+    }
+
     public List<Course> getCourseBySemester(String semester){
         return this.repository.findBySemester(semester) ;
     }

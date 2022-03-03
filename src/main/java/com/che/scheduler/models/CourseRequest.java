@@ -2,10 +2,28 @@ package com.che.scheduler.models;
 
 public class CourseRequest {
 
+    private String info ;
     private String slotType ;
     private String semester ;
     private String courseName ;
     private Integer strength ;
+    private String instructor ;
+
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
     public String getSlotType() {
         return slotType;

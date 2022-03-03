@@ -2,6 +2,8 @@ package com.che.scheduler.controller;
 
 import com.che.scheduler.models.Course;
 import com.che.scheduler.models.CourseRequest;
+import com.che.scheduler.models.Schedule;
+import com.che.scheduler.service.AlgoService;
 import com.che.scheduler.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +16,12 @@ import java.util.List;
 public class CourseController {
 
     private final CourseService courseService ;
+    private final AlgoService algoService ;
 
     @Autowired
-    public CourseController(CourseService courseService){
+    public CourseController(CourseService courseService, AlgoService algoService){
         this.courseService = courseService ;
+        this.algoService = algoService ;
     }
 
     @PostMapping("/save/course")
@@ -26,9 +30,20 @@ public class CourseController {
         this.courseService.saveCourse(course);
     }
 
+    @GetMapping("/home/generate/{paramString}")
+    public List<Schedule> getTimeTable(@PathVariable String paramString){
+        return this.algoService.generateTimeTable(paramString) ;
+    }
+
     @GetMapping("/courses/all")
     public List<Course> getCourses(){
         return this.courseService.getCourses() ;
+    }
+
+    @GetMapping("/courses/all/{semester}/{username}")
+    public List<Course> getCoursesByUsername(@PathVariable("semester")String semester,
+            @PathVariable("username") String username){
+        return this.courseService.getCoursesByInstructor(semester, username) ;
     }
 
     @GetMapping("/courses/{semester}")

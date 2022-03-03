@@ -17,26 +17,37 @@ public class ScheduleService {
         this.repository = repository ;
     }
 
-    public List<String> getFixSlots(String courseName){
+    public List<Schedule> getFixSlots(String courseName){
         List<Schedule> scheduleList = this.repository.findByCourseName(courseName);
-        List<String> slots = new ArrayList<>();
+        scheduleList.sort(Comparator.comparing(Schedule::getPref));
 
-        scheduleList.forEach(schedule -> slots.add(schedule.getTimeTable()));
-        return slots ;
+        return scheduleList ;
     }
 
-    public void saveCourseToSlot(String timeTable, String courseName , String slotType){
+    public void saveSlotToCourse(String timeTable, String courseName , String slotType, String slotName){
+        List<Schedule> scheduleList = this.repository.findByCourseName(courseName);
+        Integer pref = scheduleList.size()+1 ;
         Schedule schedule = new Schedule() ;
         schedule.setCourseName(courseName);
         schedule.setSlotType(slotType);
-
+        schedule.setPref(pref);
         schedule.setTimeTable(timeTable);
+        schedule.setSlotName(slotName);
 
         this.repository.save(schedule) ;
     }
 
-    public void deleteSlotForCourse(String timeTable, String courseName){
-        List<Schedule> schedules = this.repository.findByCourseNameAndTimeTable(courseName, timeTable);
+    public void deleteSlotForCourse(String slotName, String courseName){
+        List<Schedule> schedules = this.repository.findByCourseNameAndSlotName(courseName, slotName);
+        List<Schedule> scheduleList = this.repository.findByCourseName(courseName);
+        Integer rank = schedules.get(0).getPref() ;
+        scheduleList.forEach(schedule -> {
+            if(schedule.getPref()>rank){
+                this.repository.delete(schedule);
+                schedule.setPref(schedule.getPref()-1);
+                this.repository.save(schedule);
+            }
+        });
         schedules.forEach(schedule -> this.repository.delete(schedule)) ;
     }
 

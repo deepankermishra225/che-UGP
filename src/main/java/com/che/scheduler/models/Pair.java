@@ -1,22 +1,23 @@
 package com.che.scheduler.models;
 
 public class Pair {
-    private Integer F ;
-    private Integer S ;
 
-    public Integer getF() {
-        return F;
+    private String first ;
+    private String second ;
+
+    public String getFirst() {
+        return first;
     }
 
-    public void setF(Integer f) {
-        F = f;
+    public void setFirst(String first) {
+        this.first = first;
     }
 
-    public Integer getS() {
-        return S;
+    public String getSecond() {
+        return second;
     }
 
-    public void setS(Integer s) {
-        S = s;
+    public void setSecond(String second) {
+        this.second = second;
     }
 }

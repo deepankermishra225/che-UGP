@@ -1,6 +1,9 @@
 package com.che.scheduler.controller;
 
+import com.che.scheduler.configuration.ImapConnection;
+import com.che.scheduler.models.Schedule;
 import com.che.scheduler.models.Sem;
+import com.che.scheduler.models.User;
 import com.che.scheduler.service.ScheduleService;
 import com.che.scheduler.service.SemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +18,22 @@ public class SemController {
 
     private final SemService semService ;
     private final ScheduleService scheduleService ;
+    private final ImapConnection imapConnection ;
 
     @Autowired
-    public SemController(SemService semService, ScheduleService scheduleService){
-
+    public SemController(SemService semService, ScheduleService scheduleService
+    , ImapConnection imapConnection){
         this.semService = semService ;
         this.scheduleService = scheduleService ;
+        this.imapConnection = imapConnection ;
+    }
+
+    @PostMapping("/login")
+    public String getLogin(@RequestBody User user){
+
+        boolean status = imapConnection.login(user.getUsername(), user.getPassword());
+            if(status) return "true" ;
+            else return "false" ;
     }
 
     @PostMapping("/save/sem/form")
@@ -30,10 +43,10 @@ public class SemController {
         this.semService.saveSem(sem);
     }
 
-    @PostMapping("/save/courseSlot/{courseName}/{slotType}")
+    @PostMapping("/save/courseSlot/{courseName}/{slotType}/{slotName}")
     public void saveSlotToCourse(@RequestBody String timeTable, @PathVariable("courseName") String courseName,
-                                 @PathVariable("slotType") String slotType){
-        this.scheduleService.saveCourseToSlot(timeTable, courseName, slotType);
+                                 @PathVariable("slotType") String slotType, @PathVariable("slotName")String slotName){
+        this.scheduleService.saveSlotToCourse(timeTable, courseName, slotType, slotName);
     }
 
     @GetMapping("/getSem")
@@ -42,7 +55,7 @@ public class SemController {
     }
 
     @GetMapping("/fixSlots/{courseName}")
-    public List<String> getFixedSlots(@PathVariable String courseName){
+    public List<Schedule> getFixedSlots(@PathVariable String courseName){
         return this.scheduleService.getFixSlots(courseName);
     }
 
@@ -51,11 +64,11 @@ public class SemController {
         this.semService.deleteSem();
     }
 
-    @DeleteMapping("/deleteSlot/{timeTable}/{courseName}")
-    public void deleteSlotForCourse(@PathVariable("timeTable") String timeTable,
-                                    @PathVariable("courseName") String courseName){
+    @DeleteMapping("/deleteSlot/{slotName}/{courseName}")
+    public void deleteSlotForCourse(@PathVariable("courseName") String courseName,
+                                    @PathVariable("slotName") String slotName){
 
-         this.scheduleService.deleteSlotForCourse(timeTable, courseName);
+         this.scheduleService.deleteSlotForCourse(slotName, courseName);
     }
 
 

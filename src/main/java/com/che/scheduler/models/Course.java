@@ -11,6 +11,9 @@ public class Course {
     @Column(name = "Id")
     private Integer id ;
 
+    @Column(name="INFO")
+    private String info ;
+
     @Column(name = "SLOT_TYPE")
     private String slotType ;
 
@@ -22,6 +25,26 @@ public class Course {
 
     @Column(name = "STRENGTH")
     private Integer strength ;
+
+    @Column(name = "INSTRUCTOR")
+    private String instructor ;
+
+
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
     public Integer getId() {
         return id;
@@ -67,10 +90,11 @@ public class Course {
     }
 
     public Course(CourseRequest courseRequest){
-
+        setInfo(courseRequest.getInfo());
         setCourseName(courseRequest.getCourseName());
         setStrength(courseRequest.getStrength());
         setSemester(courseRequest.getSemester());
         setSlotType(courseRequest.getSlotType());
+        setInstructor(courseRequest.getInstructor());
     }
 }

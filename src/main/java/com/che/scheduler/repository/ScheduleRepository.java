@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
+public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     List<Schedule> findByCourseName(String courseName) ;
-    List<Schedule> findBySlotType(String slotType);
+    List<Schedule> findByCourseNameAndSlotName(String courseName, String slotName);
     List<Schedule> findByCourseNameAndTimeTable(String courseName, String timeTable) ;
 
 }
