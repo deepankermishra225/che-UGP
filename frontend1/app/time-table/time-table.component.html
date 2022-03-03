@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="container-fluid">
+    <div *ngIf = "this.semester=='empty'">
+      <button class="btn btn-info" (click)="confirmGenEven()">Generate Time Table For Even Semester</button>
+      <button class="btn btn-info" (click)="confirmGenOdd()">Generate Time Table For Odd Semester</button>
+    </div>
+    <div *ngIf = "this.semester!='empty'">
+      <p class ="h4 text-danger">Form has been generated for {{semester }} semester</p>
+      <button class="btn btn-danger" (click)="confirmDelete()">Clear Form Data </button>
+      <p class="text-dark">If you want to generate a new form then you must delete data for previous form</p>
+
+      <hr>
+
+      <div *ngIf = "this.ugSlots.length< this.ugCourses.length">
+        <p class="h4 text-warning">Number of UG Slots is less than the UG courses. Please provide more slots to
+          generate time-table...</p>
+      </div>
+      <div *ngIf = "this.pgSlots.length< this.pgCourses.length">
+        <p class="h4 text-warning">Number of PG Slots is less than the UG courses. Please provide more slots to
+          generate time-table...</p>
+      </div>
+      <div *ngIf = "this.ugSlots.length >= this.ugCourses.length && this.pgSlots.length>= this.pgCourses.length">
+        <button class="btn btn-success" name="generate" (click)="generate()" >Generate Time-Table</button><br><br>
+        <label for="parameter">Generate Time Table Based On: </label>
+        <select name="parameter" id="parameter" (change)="changeParam($event)">
+          <option value="shuffle">Random Shuffling</option>
+          <option value="strength">Batch Strength</option>
+        </select>
+
+        <hr>
+        <div *ngIf="this.timeTable===true">
+          <button class = 'btn btn-danger' (click)="onBtnExport()">Download File</button>
+          <div class="mt-3">
+          <ag-grid-angular
+            style="width: 900px; height: 400px;"
+            class="ag-theme-alpine"
+            [rowData]="rowData"
+            (gridReady)="onGridReady($event)"
+            [columnDefs]="columnDefs">
+          </ag-grid-angular>
+          </div>
+        </div>
+      </div>
+      <hr>
+
+
+    </div>
+  </div>
+</div>

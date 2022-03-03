@@ -1,0 +1,32 @@
+<div *ngIf="isUserLoggedIn()===true">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <div class="container">
+      <div class="navbar-brand" >Department of Chemical Engineering </div>
+
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+
+          <li class="nav-item" *ngIf="isUserAdmin()">
+            <a class="nav-link" routerLink="/home">Time Table</a>
+          </li>
+          <li class="nav-item "  *ngIf="isUserAdmin()">
+            <a class="nav-link" routerLink="/slots">Slots</a>
+          </li>
+          <li class="nav-item " >
+            <a class="nav-link" routerLink="/form">Form</a>
+          </li>
+          <li class="nav-item ">
+            <button class="btn nav-link" (click)="confirmLogout()" >LogOut</button>
+          </li>
+        </ul>
+
+
+      </div>
+    </div>
+  </nav>
+</div>
+<div>
+  <div class="container mt-3">
+    <router-outlet></router-outlet>
+  </div>
+</div>
