@@ -29,6 +29,10 @@ export class CourseService {
        return this.http.post<any>(`${URL}/save/courseSlot/${courseName}/${slotType}/${slotName}`, timeTable, { responseType: 'text' as 'json'});
     }
 
+    saveUsername(username: string): Observable<any>{
+          return this.http.post<any>(`${URL}/admin/save`, username , {responseType: 'text' as 'json'}) ;
+      }
+
     getTimeTable(paramString: string): Observable<Schedule[]>{
       return this.http.get<Schedule[]>(`${URL}/home/generate/${paramString}`);
     }
@@ -61,6 +65,10 @@ export class CourseService {
        return this.http.get<Schedule[]>(`${URL}/fixSlots/${courseName}`) ;
     }
 
+    getAdmin(): Observable<string[]>{
+        return this.http.get<string[]>(`${URL}/admin/all`) ;
+    }
+
     deleteCourseById(id: number): Observable<any>{
         return this.http.delete<any>(`${URL}/delete/course/${id}`) ;
     }
@@ -73,7 +81,9 @@ export class CourseService {
         return this.http.delete<any>(`${URL}/deleteSlot/${slotName}/${courseName}`);
     }
 
-
+    deleteUsername(username: string): Observable<any> {
+        return this.http.delete<any>(`${URL}/admin/delete/${username}`) ;
+    }
 
 
 }

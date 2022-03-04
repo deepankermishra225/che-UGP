@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit  {
   loginSuccess = false;
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 
+
+
   ngOnInit(){
 
   }
@@ -52,11 +54,13 @@ export class LoginComponent implements OnInit  {
 
       handleLogin(): void {
          this.authenticationService.connect(this.user).subscribe((status: string) =>{
-          if(status==='true'){
+          if(status==='admin' || status ==='true'){
              this.invalidLogin = false;
              this.loginSuccess = true;
              this.successMessage = 'Login Successful';
              this.authenticationService.authentication(this.user) ;
+             if(status==='admin')this.authenticationService.adminAccess('true') ;
+             else this.authenticationService.adminAccess('false') ;
              this.user.username = '' ;
              this.user.password = '' ;
              this.router.navigate(['/form']);

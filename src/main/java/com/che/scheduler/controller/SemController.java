@@ -4,6 +4,7 @@ import com.che.scheduler.configuration.ImapConnection;
 import com.che.scheduler.models.Schedule;
 import com.che.scheduler.models.Sem;
 import com.che.scheduler.models.User;
+import com.che.scheduler.service.AdminService;
 import com.che.scheduler.service.ScheduleService;
 import com.che.scheduler.service.SemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +18,28 @@ import java.util.List;
 public class SemController {
 
     private final SemService semService ;
+    private final AdminService adminService ;
     private final ScheduleService scheduleService ;
     private final ImapConnection imapConnection ;
 
     @Autowired
     public SemController(SemService semService, ScheduleService scheduleService
-    , ImapConnection imapConnection){
+    , ImapConnection imapConnection, AdminService adminService){
         this.semService = semService ;
         this.scheduleService = scheduleService ;
         this.imapConnection = imapConnection ;
+        this.adminService = adminService ;
     }
 
     @PostMapping("/login")
     public String getLogin(@RequestBody User user){
 
         boolean status = imapConnection.login(user.getUsername(), user.getPassword());
-            if(status) return "true" ;
-            else return "false" ;
+            if(!status) return "false" ;
+            status = adminService.checkIfAdmin(user.getUsername());
+
+            if(status) return "admin" ;
+            else return "true" ;
     }
 
     @PostMapping("/save/sem/form")

@@ -37,6 +37,10 @@ export class AuthenticationService {
            this.registerSuccessfulLogin(user.username! , user.password!);
     }
 
+    adminAccess(status: string){
+          sessionStorage.setItem('isAdmin', status) ;
+    }
+
     registerSuccessfulLogin(username: string , password: string): void {
       sessionStorage.setItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME, username)
     }
@@ -54,16 +58,15 @@ export class AuthenticationService {
     }
 
     isUserAdmin(){
-        let user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME)
-        if(user ==='dugc_che'|| user ==='dmishra'|| user==='shubgupt' || user==='tusharm') return true
-        else return false
+        let status  = sessionStorage.getItem('isAdmin') ;
+        if(status==='true') return true ;
+        else return false ;
     }
-
-
 
     getLoggedInUserName() {
       let currUser = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME)
       if (currUser === null) return ''
       return currUser
     }
+
 }

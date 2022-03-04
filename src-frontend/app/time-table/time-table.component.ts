@@ -26,6 +26,8 @@ export class TimeTableComponent implements OnInit {
    radioItems: Array<string>;
    model   = {option: 'shuffle'};
    paramString = 'shuffle';
+   username: string = '';
+   admins: string[] = [];
 
    constructor(private slotService: SlotService, private route: ActivatedRoute, private router: Router,
          private confirmationDialogService: ConfirmationDialogService, private courseService: CourseService) {
@@ -57,6 +59,7 @@ export class TimeTableComponent implements OnInit {
           if(this.semester!='empty')this.getSlotsAndCourses(this.semester);
           else this.getSlotsAndCourses('even');
      });
+     this.getAdmin() ;
   }
 
   getSlotsAndCourses(semester: string){
@@ -122,6 +125,40 @@ export class TimeTableComponent implements OnInit {
      this.timeTable=true ;
      this.courseService.getTimeTable(this.paramString).subscribe(timeTable =>{
         this.rowData = timeTable ;
+     })
+  }
+
+  confirmSaveUsername(){
+      this.confirmationDialogService.confirm('Please Confirm..', this.username + ' will be added to admin list')
+                     .then((confirmed) => {
+                     if(confirmed)this.saveUsername() ;
+                     }).catch(() => this.refreshData());
+  }
+
+  confirmDeleteUsername(user: string){
+     this.confirmationDialogService.confirm('Are You Sure?', user + ' will be lost...')
+                   .then((confirmed) => {
+                   if(confirmed)this.deleteUsername(user) ;
+                   }).catch(() => this.refreshData());
+  }
+
+  saveUsername(){
+    if(this.username.length>0){
+        this.courseService.saveUsername(this.username).subscribe( response => {
+            this.username = '' ;
+            this.refreshData() ;
+      })
+    }
+  }
+
+  getAdmin(){
+      this.courseService.getAdmin().subscribe( data => {
+          this.admins = data ;
+      })
+  }
+  deleteUsername(username: string){
+     this.courseService.deleteUsername(username).subscribe( data => {
+          this.refreshData() ;
      })
   }
 
