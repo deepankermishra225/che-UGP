@@ -42,12 +42,12 @@ public class AlgoService {
         priority.put("DC"+"PG Only",3) ;
         priority.put("OE"+"PG & UG 3rd Year", 4) ;
         priority.put("OE"+"PG & UG 4th Year", 5) ;
-        priority.put("DE"+"PG & UG 3rd Year", 6) ;
-        priority.put("DE"+"PG & UG 4th Year", 7) ;
-        priority.put("OE"+"UG Only", 8) ;
-        priority.put("DE"+"UG Only", 9) ;
-        priority.put("OE"+"PG Only", 10);
-        priority.put("DE"+"PG Only", 11);
+        priority.put("DE"+"PG & UG 3rd Year", 4) ;
+        priority.put("DE"+"PG & UG 4th Year", 5) ;
+        priority.put("OE"+"UG Only", 6) ;
+        priority.put("DE"+"UG Only", 6) ;
+        priority.put("OE"+"PG Only", 7);
+        priority.put("DE"+"PG Only", 7);
     }
 
     // get an array from String of timeTable
